@@ -45,7 +45,7 @@ namespace Options {
 
     static void CreateFolder(MenuItem *item) {
         std::string path = cfg.cwd;
-        std::string name = OSK::GetText("New Folder", "Enter folder name");
+        std::string name = OSK::GetText("新しいフォルダ", "フォルダ名を入力");
         path.append(name);
         std::u16string path_u16 = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(path.data());
         
@@ -57,7 +57,7 @@ namespace Options {
 
     static void CreateFile(MenuItem *item) {
         std::string path = cfg.cwd;
-        std::string name = OSK::GetText("New File", "Enter file name");
+        std::string name = OSK::GetText("新しいファイル", "ファイル名を入力");
         path.append(name);
         std::u16string path_u16 = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(path.data());
         
@@ -68,7 +68,7 @@ namespace Options {
     }
 
     static void Rename(MenuItem *item, const std::string &filename) {
-        std::string path = OSK::GetText(filename, "Enter new name");
+        std::string path = OSK::GetText(filename, "新しい名前を入力");
 
         if (R_SUCCEEDED(FS::Rename(&item->entries[item->selected], path.c_str()))) {
             FS::GetDirList(cfg.cwd, item->entries);
@@ -131,9 +131,9 @@ namespace GUI {
 
     void DisplayFileOptions(MenuItem *item) {
         C2D::Image(cfg.dark_theme? options_dialog_dark : options_dialog, 54, 30);
-        C2D::Text(61, 34, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "Actions");
+        C2D::Text(61, 34, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "アクション");
         
-        C2D::GetTextSize(0.42f, &cancel_width, &cancel_height, "CANCEL");
+        C2D::GetTextSize(0.42f, &cancel_width, &cancel_height, "キャンセル");
         
         if (row == 0 && column == 0)
             C2D::Rect(56, 69, 103, 36, cfg.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
@@ -152,20 +152,20 @@ namespace GUI {
         else if (column == 2 && options_more)
             C2D::Rect((256 - cancel_width) - 5, (221 - cancel_height) - 5, cancel_width + 10, cancel_height + 10, cfg.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
             
-        C2D::Text(256 - cancel_width, 221 - cancel_height - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "CANCEL");
+        C2D::Text(256 - cancel_width, 221 - cancel_height - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "キャンセル");
         
         if (!options_more) {
-            C2D::Text(66, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Properties");
-            C2D::Text(66, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, copy? "Paste" : "Copy");
-            C2D::Text(66, 150, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Delete");
-            C2D::Text(170, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Refresh");
-            C2D::Text(170, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, move? "Paste" : "Move");
-            C2D::Text(170, 150, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "More...");
+            C2D::Text(66, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "プロパティ");
+            C2D::Text(66, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, copy? "貼り付け" : "コピー");
+            C2D::Text(66, 150, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "削除");
+            C2D::Text(170, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "リフレッシュ");
+            C2D::Text(170, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, move? "貼り付け" : "移動");
+            C2D::Text(170, 150, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "次へ...");
         }
         else {
-            C2D::Text(66, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "New folder");
-            C2D::Text(66, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Rename");
-            C2D::Text(170, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "New file");
+            C2D::Text(66, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "新しいフォルダ");
+            C2D::Text(66, 114, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "リネーム");
+            C2D::Text(170, 78, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "新しいファイル");
         }
     }
 

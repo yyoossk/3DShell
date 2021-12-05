@@ -42,26 +42,26 @@ namespace Options {
 
 namespace GUI {
     static int selection = 0;
-    static const std::string prompt = "Do you wish to continue?";
+    static const std::string prompt = "続行しますか?";
     static float cancel_height = 0.f, cancel_width = 0.f, confirm_height = 0.f, confirm_width = 0.f, prompt_width = 0.f;
 
     void DisplayDeleteOptions(MenuItem *item) {
         C2D::Image(cfg.dark_theme? dialog_dark : dialog, ((320 - (dialog.subtex->width)) / 2), ((240 - (dialog.subtex->height)) / 2));
-        C2D::Text(((320 - (dialog.subtex->width)) / 2) + 6, ((240 - (dialog.subtex->height)) / 2) + 6 - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "Delete");
+        C2D::Text(((320 - (dialog.subtex->width)) / 2) + 6, ((240 - (dialog.subtex->height)) / 2) + 6 - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "削除");
 
         C2D::GetTextSize(0.42f, &prompt_width, nullptr, prompt.c_str());
         C2D::Text(((320 - (prompt_width)) / 2), ((240 - (dialog.subtex->height)) / 2) + 40 - 3, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, prompt.c_str());
         
-        C2D::GetTextSize(0.42f, &confirm_width, &confirm_height, "YES");
-        C2D::GetTextSize(0.42f, &cancel_width, &cancel_height, "NO");
+        C2D::GetTextSize(0.42f, &confirm_width, &confirm_height, "はい");
+        C2D::GetTextSize(0.42f, &cancel_width, &cancel_height, "いいえ");
         
         if (selection == 0)
             C2D::Rect((288 - cancel_width) - 5, (159 - cancel_height) - 5, cancel_width + 10, cancel_height + 10, cfg.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
         else
             C2D::Rect((248 - (confirm_width)) - 5, (159 - confirm_height) - 5, confirm_width + 10, confirm_height + 10, cfg.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
             
-        C2D::Text(248 - (confirm_width), (159 - confirm_height) - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "YES");
-        C2D::Text(288 - cancel_width, (159 - cancel_height) - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "NO");
+        C2D::Text(248 - (confirm_width), (159 - confirm_height) - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "はい");
+        C2D::Text(288 - cancel_width, (159 - cancel_height) - 3, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "いいえ");
     }
 
     void ControlDeleteOptions(MenuItem *item, u32 *kDown) {

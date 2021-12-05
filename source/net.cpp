@@ -31,7 +31,7 @@ namespace Net {
             return -1;
             
         if (R_FAILED(ret = socInit(static_cast<u32* >(soc_buf), 0x100000))) {
-            Log::Error("socInit() failed: 0x%x\n", ret);
+            Log::Error("socInit()が失敗しました: 0x%x\n", ret);
             std::free(soc_buf);
             return ret;
         }
@@ -51,7 +51,7 @@ namespace Net {
         u32 status = 0;
 
         if (R_FAILED(ret = ACU_GetStatus(&status))) {
-            Log::Error("ACU_GetStatus() failed: 0x%x\n", ret);
+            Log::Error("ACU_GetStatus()が失敗しました: 0x%x\n", ret);
             return false;
         }
 
@@ -82,8 +82,8 @@ namespace Net {
         CURL *handle = curl_easy_init();
         
         curl_slist *header_data = nullptr;
-        header_data = curl_slist_append(header_data, "Content-Type: application/json");
-        header_data = curl_slist_append(header_data, "Accept: application/json");
+        header_data = curl_slist_append(header_data, "コンテンツタイプ: アプリケーション/json");
+        header_data = curl_slist_append(header_data, "承認: アプリケーション/json");
         curl_easy_setopt(handle, CURLOPT_HTTPHEADER, header_data);
         
         curl_easy_setopt(handle, CURLOPT_URL, "https://api.github.com/repos/joel16/3DShell/releases/latest");

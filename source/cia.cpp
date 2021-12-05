@@ -15,12 +15,12 @@ namespace CIA {
         u8 hmac[0x20];
         
         if (R_FAILED(ret = APT_PrepareToDoApplicationJump(0, titleId, MEDIATYPE_SD))) {
-            Log::Error("APT_PrepareToDoApplicationJump failed: 0x%x\n", ret);
+            Log::Error("APT_PrepareToDoApplicationJumpが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = APT_DoApplicationJump(param, sizeof(param), hmac))) {
-            Log::Error("APT_DoApplicationJump failed: 0x%x\n", ret);
+            Log::Error("APT_DoApplicationJumpが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
@@ -35,22 +35,22 @@ namespace CIA {
         AM_TitleEntry title;
 
         if (R_FAILED(ret = FSUSER_OpenFile(&src_handle, sdmc_archive, fsMakePath(PATH_ASCII, path.c_str()), FS_OPEN_READ, 0))) {
-            Log::Error("FSUSER_OpenFile failed: 0x%x\n", ret);
+            Log::Error("FSUSER_OpenFileが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = AM_GetCiaFileInfo(MEDIATYPE_SD, &title, src_handle))) {
-            Log::Error("AM_GetCiaFileInfo failed: 0x%x\n", ret);
+            Log::Error("AM_GetCiaFileInfoが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = FSFILE_GetSize(src_handle, &size))) {
-            Log::Error("FSFILE_GetSize failed: 0x%x\n", ret);
+            Log::Error("FSFILE_GetSizeが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = AM_StartCiaInstall(MEDIATYPE_SD, &dst_handle))) {
-            Log::Error("AM_StartCiaInstall failed: 0x%x\n", ret);
+            Log::Error("AM_StartCiaInstallが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
@@ -64,7 +64,7 @@ namespace CIA {
                 delete[] buffer;
                 FSFILE_Close(src_handle);
                 FSFILE_Close(dst_handle);
-                Log::Error("FSFILE_Read failed: 0x%x\n", ret);
+                Log::Error("FSFILE_Readが失敗しました: 0x%x\n", ret);
                 return ret;
             }
             
@@ -72,30 +72,30 @@ namespace CIA {
                 delete[] buffer;
                 FSFILE_Close(src_handle);
                 FSFILE_Close(dst_handle);
-                Log::Error("FSFILE_Read failed: 0x%x\n", ret);
+                Log::Error("FSFILE_Readが失敗しました: 0x%x\n", ret);
                 return ret;
             }
             
             offset += bytes_read;
-            GUI::ProgressBar("Installing", "3DShell_UPDATE.cia", offset, size);
+            GUI::ProgressBar("インストール中", "3DShell_UPDATE.cia", offset, size);
         } while(offset < size);
         
         if (bytes_read != bytes_written) {
             AM_CancelCIAInstall(dst_handle);
             delete[] buffer;
-            Log::Error(".CIA bytes read and written mismatch: 0x%x\n", ret);
+            Log::Error(".CIAバイトの読み取りと書き込みの不一致: 0x%x\n", ret);
             return ret;
         }
         
         delete[] buffer;
         
         if (R_FAILED(ret = AM_FinishCiaInstall(dst_handle))) {
-            Log::Error("AM_FinishCiaInstall failed: 0x%x\n", ret);
+            Log::Error("AM_FinishCiaInstallが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = FSFILE_Close(src_handle))) {
-            Log::Error("FSFILE_Close failed: 0x%x\n", ret);
+            Log::Error("FSFILE_Closeが失敗しました: 0x%x\n", ret);
             return ret;
         }
         

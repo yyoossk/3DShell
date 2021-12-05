@@ -22,32 +22,32 @@ namespace Services {
         Config::Load();
         
         if (R_FAILED(ret = acInit())) {
-            Log::Error("acInit failed: 0x%x\n", ret);
+            Log::Error("acInitが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = amInit())) {
-            Log::Error("amInit failed: 0x%x\n", ret);
+            Log::Error("amInitが失敗しました: 0x%x\n", ret);
             return ret;
         }
         
         if (R_FAILED(ret = AM_QueryAvailableExternalTitleDatabase(nullptr))) {
-            Log::Error("AM_QueryAvailableExternalTitleDatabase failed: 0x%x\n", ret);
+            Log::Error("AM_QueryAvailableExternalTitleDatabaseが失敗しました: 0x%x\n", ret);
             return ret;
         }
 
         if (R_FAILED(ret = mcuHwcInit())) {
-            Log::Error("mcuHwcInit failed: 0x%x\n", ret);
+            Log::Error("mcuHwcInitが失敗しました: 0x%x\n", ret);
             return ret;
         }
 
         if (R_FAILED(ret = ptmuInit())) {
-            Log::Error("ptmuInit failed: 0x%x\n", ret);
+            Log::Error("ptmuInitが失敗しました: 0x%x\n", ret);
             return ret;
         }
 
         if (R_FAILED(ret = romfsInit())) {
-            Log::Error("romfsInit failed: 0x%x\n", ret);
+            Log::Error("romfsInitが失敗しました: 0x%x\n", ret);
             return ret;
         }
         

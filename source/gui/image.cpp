@@ -84,13 +84,13 @@ namespace GUI {
 
         if (properties) {
             C2D::Image(cfg.dark_theme? properties_dialog_dark : properties_dialog, ((320 - (properties_dialog.subtex->width)) / 2), ((240 - (properties_dialog.subtex->height)) / 2));
-            C2D::Text(((320 - (properties_dialog.subtex->width)) / 2) + 6, ((240 - (properties_dialog.subtex->height)) / 2) + 6, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "Properties");
+            C2D::Text(((320 - (properties_dialog.subtex->width)) / 2) + 6, ((240 - (properties_dialog.subtex->height)) / 2) + 6, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "プロパティ");
             
             const std::u16string entry_name_utf16 = reinterpret_cast<const char16_t *>(item->entries[item->selected].name);
             const std::string filename = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.to_bytes(entry_name_utf16.data());
-            C2D::Textf(66, 57, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Name: %.20s", filename.c_str());
-            C2D::Textf(66, 73, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Width: %hu px", item->texture.subtex->width);
-            C2D::Textf(66, 89, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Height: %hu px", item->texture.subtex->height);
+            C2D::Textf(66, 57, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "名前: %.20s", filename.c_str());
+            C2D::Textf(66, 73, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "幅: %hu px", item->texture.subtex->width);
+            C2D::Textf(66, 89, 0.42f, cfg.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "高さ: %hu px", item->texture.subtex->height);
             C2D::GetTextSize(0.42f, &ok_width, &ok_height, "OK");
             C2D::Rect((253 - ok_width) - 5, (218 - ok_height) - 15, ok_width + 10, ok_height + 10, cfg.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
             C2D::Text(253 - ok_width, (218 - ok_height) - 10, 0.42f, cfg.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "OK");

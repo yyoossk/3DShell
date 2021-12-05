@@ -92,7 +92,7 @@ namespace FS {
         FS_ArchiveResource resource = { 0 };
         
         if (R_FAILED(ret = FSUSER_GetArchiveResource(&resource, mediatype))) {
-            Log::Error("FSUSER_GetArchiveResource(GetFreeStorage) failed: 0x%x\n", ret);
+            Log::Error("FSUSER_GetArchiveResource(GetFreeStorage)が失敗しました: 0x%x\n", ret);
             return ret;
         }
             
@@ -104,7 +104,7 @@ namespace FS {
         FS_ArchiveResource resource = { 0 };
         
         if (R_FAILED(ret = FSUSER_GetArchiveResource(&resource, mediatype))) {
-            Log::Error("FSUSER_GetArchiveResource(GetTotalStorage) failed: 0x%x\n", ret);
+            Log::Error("FSUSER_GetArchiveResource(GetTotalStorage)が失敗しました: 0x%x\n", ret);
             return ret;
         }
         
@@ -116,7 +116,7 @@ namespace FS {
         FS_ArchiveResource resource = { 0 };
         
         if (R_FAILED(ret = FSUSER_GetArchiveResource(&resource, mediatype))) {
-            Log::Error("FSUSER_GetArchiveResource(GetUsedStorage) failed: 0x%x\n", ret);
+            Log::Error("FSUSER_GetArchiveResource(GetUsedStorage)が失敗しました: 0x%x\n", ret);
             return ret;
         }
             
@@ -169,7 +169,7 @@ namespace FS {
         std::u16string path_u16 = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(path.data());
         
         if (R_FAILED(ret = FSUSER_OpenDirectory(&dir, archive, fsMakePath(PATH_UTF16, path_u16.c_str())))) {
-            Log::Error("FSUSER_OpenDirectory(%s) failed: 0x%x\n", path.c_str(), ret);
+            Log::Error("FSUSER_OpenDirectory(%s)が失敗しました: 0x%x\n", path.c_str(), ret);
             return ret;
         }
         
@@ -179,7 +179,7 @@ namespace FS {
             FS_DirectoryEntry entry;
             
             if (R_FAILED(ret = FSDIR_Read(dir, &entry_count, 1, &entry))) {
-                Log::Error("FSDIR_Read(%s) failed: 0x%x\n", path.c_str(), ret);
+                Log::Error("FSDIR_Read(%s)が失敗しました: 0x%x\n", path.c_str(), ret);
                 return ret;
             }
             
@@ -190,7 +190,7 @@ namespace FS {
         std::sort(entries.begin(), entries.end(), FS::Sort);
         
         if (R_FAILED(ret = FSDIR_Close(dir))) {
-            Log::Error("FSDIR_Close(%s) failed: 0x%x\n", path.c_str(), ret);
+            Log::Error("FSDIR_Close(%s)が失敗しました: 0x%x\n", path.c_str(), ret);
             return ret;
         }
         
@@ -236,13 +236,13 @@ namespace FS {
         
         if (entry->attributes & FS_ATTRIBUTE_DIRECTORY) {
             if (R_FAILED(ret = FSUSER_DeleteDirectoryRecursively(archive, fsMakePath(PATH_UTF16, path.c_str())))) {
-                Log::Error("FSUSER_DeleteDirectoryRecursively(%s) failed: 0x%x\n", path.c_str(), ret);
+                Log::Error("FSUSER_DeleteDirectoryRecursively(%s)が失敗しました: 0x%x\n", path.c_str(), ret);
                 return ret;
             }
         }
         else {
             if (R_FAILED(ret = FSUSER_DeleteFile(archive, fsMakePath(PATH_UTF16, path.c_str())))) {
-                Log::Error("FSUSER_DeleteFile(%s) failed: 0x%x\n", path.c_str(), ret);
+                Log::Error("FSUSER_DeleteFile(%s)が失敗しました: 0x%x\n", path.c_str(), ret);
                 return ret;
             }
         }
@@ -263,13 +263,13 @@ namespace FS {
         
         if (entry->attributes & FS_ATTRIBUTE_DIRECTORY) {
             if (R_FAILED(ret = FSUSER_RenameDirectory(archive, fsMakePath(PATH_UTF16, path.c_str()), archive, fsMakePath(PATH_UTF16, new_path.c_str())))) {
-                Log::Error("FSUSER_RenameDirectory(%s, %s) failed: 0x%x\n", path.c_str(), new_path.c_str(), ret);
+                Log::Error("FSUSER_RenameDirectory(%s, %s)が失敗しました: 0x%x\n", path.c_str(), new_path.c_str(), ret);
                 return ret;
             }
         }
         else {
             if (R_FAILED(ret = FSUSER_RenameFile(archive, fsMakePath(PATH_UTF16, path.c_str()), archive, fsMakePath(PATH_UTF16, new_path.c_str())))) {
-                Log::Error("FSUSER_RenameFile(%s, %s) failed: 0x%x\n", path.c_str(), new_path.c_str(), ret);
+                Log::Error("FSUSER_RenameFile(%s, %s)が失敗しました: 0x%x\n", path.c_str(), new_path.c_str(), ret);
                 return ret;
             }
         }
@@ -282,20 +282,20 @@ namespace FS {
         Handle src_handle, dest_handle;
         
         if (R_FAILED(ret = FSUSER_OpenFile(&src_handle, src_archive, fsMakePath(PATH_UTF16, src_path.c_str()), FS_OPEN_READ, 0))) {
-            Log::Error("FSUSER_OpenFile(%s) failed: 0x%x\n", src_path.c_str(), ret);
+            Log::Error("FSUSER_OpenFile(%s)が失敗しました: 0x%x\n", src_path.c_str(), ret);
             return ret;
         }
         
         u64 size = 0;
         if (R_FAILED(ret = FSFILE_GetSize(src_handle, &size))) {
-            Log::Error("FSFILE_GetSize(%s) failed: 0x%x\n", src_path.c_str(), ret);
+            Log::Error("FSFILE_GetSize(%s)が失敗しました: 0x%x\n", src_path.c_str(), ret);
             FSFILE_Close(src_handle);
             return ret;
         }
 
         // Make sure we have enough storage to carry out this operation
         if (FS::GetFreeStorage(src_archive == sdmc_archive? SYSTEM_MEDIATYPE_SD : SYSTEM_MEDIATYPE_CTR_NAND) < size) {
-            Log::Error("Not enough storage is available to process this command 0x%x\n", src_path.c_str(), ret);
+            Log::Error("このコマンドを処理するために使用できるストレージが不足しています 0x%x\n", src_path.c_str(), ret);
             FSFILE_Close(src_handle);
             return -1;
         }
@@ -304,7 +304,7 @@ namespace FS {
         FSUSER_CreateFile(archive, fsMakePath(PATH_UTF16, dest_path.c_str()), 0, size);
         
         if (R_FAILED(ret = FSUSER_OpenFile(&dest_handle, archive, fsMakePath(PATH_UTF16, dest_path.c_str()), FS_OPEN_WRITE, 0))) {
-            Log::Error("FSUSER_OpenFile(%s) failed: 0x%x\n", dest_path.c_str(), ret);
+            Log::Error("FSUSER_OpenFile(%s)が失敗しました: 0x%x\n", dest_path.c_str(), ret);
             FSFILE_Close(src_handle);
             return ret;
         }
@@ -327,7 +327,7 @@ namespace FS {
             std::memset(buf, 0, buf_size);
             
             if (R_FAILED(ret = FSFILE_Read(src_handle, &bytes_read, offset, buf, buf_size))) {
-                Log::Error("FSFILE_Read(%s) failed: 0x%x\n", src_path.c_str(), ret);
+                Log::Error("FSFILE_Read(%s)が失敗しました: 0x%x\n", src_path.c_str(), ret);
                 delete[] buf;
                 FSFILE_Close(src_handle);
                 FSFILE_Close(dest_handle);
@@ -335,7 +335,7 @@ namespace FS {
             }
             
             if (R_FAILED(ret = FSFILE_Write(dest_handle, &bytes_written, offset, buf, bytes_read, FS_WRITE_FLUSH))) {
-                Log::Error("FSFILE_Write(%s) failed: 0x%x\n", dest_path.c_str(), ret);
+                Log::Error("FSFILE_Write(%s)が失敗しました: 0x%x\n", dest_path.c_str(), ret);
                 delete[] buf;
                 FSFILE_Close(src_handle);
                 FSFILE_Close(dest_handle);
@@ -343,7 +343,7 @@ namespace FS {
             }
             
             offset += bytes_read;
-            GUI::ProgressBar("Copying", filename.c_str(), offset, size);
+            GUI::ProgressBar("コピー中", filename.c_str(), offset, size);
         } while(offset < size);
         
         delete[] buf;
@@ -357,7 +357,7 @@ namespace FS {
         Handle dir;
         
         if (R_FAILED(ret = FSUSER_OpenDirectory(&dir, src_archive, fsMakePath(PATH_UTF16, src_path.c_str())))) {
-            Log::Error("FSUSER_OpenDirectory(%s) failed: 0x%x\n", src_path, ret);
+            Log::Error("FSUSER_OpenDirectory(%s)が失敗しました: 0x%x\n", src_path, ret);
             return ret;
         }
         
@@ -370,7 +370,7 @@ namespace FS {
             FS_DirectoryEntry entry;
             
             if (R_FAILED(ret = FSDIR_Read(dir, &entry_count, 1, &entry))) {
-                Log::Error("FSDIR_Read(%s) failed: 0x%x\n", src_path.c_str(), ret);
+                Log::Error("FSDIR_Read(%s)が失敗しました: 0x%x\n", src_path.c_str(), ret);
                 return ret;
             }
             
@@ -391,7 +391,7 @@ namespace FS {
         } while(entry_count > 0);
         
         if (R_FAILED(ret = FSDIR_Close(dir))) {
-            Log::Error("FSDIR_Close(%s) failed: 0x%x\n", src_path.c_str(), ret);
+            Log::Error("FSDIR_Close(%s)が失敗しました: 0x%x\n", src_path.c_str(), ret);
             return ret;
         }
         
@@ -437,13 +437,13 @@ namespace FS {
         
         if (fs_copy_entry.is_dir) {
             if (R_FAILED(ret = FSUSER_RenameDirectory(src_archive, fsMakePath(PATH_UTF16, fs_copy_entry.copy_path.c_str()), archive, fsMakePath(PATH_UTF16, path.c_str())))) {
-                Log::Error("FSUSER_RenameDirectory(%s, %s) failed: 0x%x\n", path.c_str(), fs_copy_entry.copy_filename.c_str(), ret);
+                Log::Error("FSUSER_RenameDirectory(%s, %s)が失敗しました: 0x%x\n", path.c_str(), fs_copy_entry.copy_filename.c_str(), ret);
                 return ret;
             }
         }
         else {
             if (R_FAILED(ret = FSUSER_RenameFile(src_archive, fsMakePath(PATH_UTF16, fs_copy_entry.copy_path.c_str()), archive, fsMakePath(PATH_UTF16, path.c_str())))) {
-                Log::Error("FSUSER_RenameFile(%s, %s) failed: 0x%x\n", path.c_str(), fs_copy_entry.copy_filename.c_str(), ret);
+                Log::Error("FSUSER_RenameFile(%s, %s)が失敗しました: 0x%x\n", path.c_str(), fs_copy_entry.copy_filename.c_str(), ret);
                 return ret;
             }
         }

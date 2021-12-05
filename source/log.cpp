@@ -46,7 +46,7 @@ namespace Log {
         std::vsnprintf(buf, sizeof(buf), data, args);
         va_end(args);
         
-        std::string error_string = "[ERROR] ";
+        std::string error_string = "[エラー] ";
         error_string.append(buf);
         
         std::printf("%s", error_string.c_str());

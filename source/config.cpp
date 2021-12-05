@@ -26,14 +26,14 @@ namespace Config {
         
         Handle file;
         if (R_FAILED(ret = FSUSER_OpenFile(&file, sdmc_archive, fsMakePath(PATH_ASCII, config_path.c_str()), FS_OPEN_WRITE, 0))) {
-            Log::Error("FSUSER_OpenFile(/3ds/3DShell/config.json) failed: 0x%x\n", ret);
+            Log::Error("FSUSER_OpenFile(/3ds/3DShell/config.json)が失敗しましたd: 0x%x\n", ret);
             delete[] buf;
             return ret;
         }
         
         u32 bytes_written = 0;
         if (R_FAILED(ret = FSFILE_Write(file, &bytes_written, 0, buf, length, FS_WRITE_FLUSH))) {
-            Log::Error("FSFILE_Write(/3ds/3DShell/config.json) failed: 0x%x\n", ret);
+            Log::Error("FSFILE_Write(/3ds/3DShell/config.json)が失敗しました: 0x%x\n", ret);
             FSFILE_Close(file);
             delete[] buf;
             return ret;
@@ -103,12 +103,12 @@ namespace Config {
         delete[] buf;
         
         if (!root)
-            Log::Error("Failed to decode config.json!\n");
+            Log::Error("config.jsonのデコードに失敗しました!\n");
         
         json_t *config_ver = json_object_get(root, "config_ver");
         config_version_holder = json_integer_value(config_ver);
         
-        json_t *sort = json_object_get(root, "sort");
+        json_t *sort = json_object_get(root, "ソート");
         cfg.sort = json_integer_value(sort);
         
         json_t *dev_options = json_object_get(root, "dev_options");

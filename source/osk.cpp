@@ -21,8 +21,8 @@ namespace OSK {
         if (initial_text.length() != 0)
             swkbdSetInitialText(&swkbd, initial_text.c_str());
             
-        swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "Cancel", false);
-        swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "Confirm", true);
+        swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "キャンセル", false);
+        swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "確認", true);
         
         swkbdSetFeatures(&swkbd, SWKBD_ALLOW_HOME);
         swkbdSetFeatures(&swkbd, SWKBD_ALLOW_RESET);

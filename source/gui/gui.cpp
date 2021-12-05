@@ -57,7 +57,7 @@ namespace GUI {
         while(download_progress) {
             download_size = (download_size < 1.0f)? 1.0f : download_size;
             download_size = (download_size < download_offset)? download_offset : download_size;
-            GUI::ProgressBar("Downloading", envIsHomebrew()? "3DShell.3dsx" : "3DShell.cia", download_offset, download_size);
+            GUI::ProgressBar("ダウンロード中", envIsHomebrew()? "3DShell.3dsx" : "3DShell.cia", download_offset, download_size);
         }
     }
 
@@ -66,7 +66,7 @@ namespace GUI {
         const std::tm calendar_time = *std::localtime(std::addressof(time));
 
         static char time_string[30];
-        std::snprintf(time_string, 30, "%2i:%02i %s", (calendar_time.tm_hour % 12) == 0? 12 : (calendar_time.tm_hour % 12), calendar_time.tm_min, (calendar_time.tm_hour / 12)? "PM" : "AM");
+        std::snprintf(time_string, 30, "%2i:%02i %s", (calendar_time.tm_hour % 12) == 0? 12 : (calendar_time.tm_hour % 12), calendar_time.tm_min, (calendar_time.tm_hour / 12)? "午後" : "午前");
         
         float text_height = 0.f;
         C2D::GetTextSize(0.45f, nullptr, &text_height, time_string);
@@ -127,7 +127,7 @@ namespace GUI {
             }
         }
         else if ((*kDown & KEY_TOUCH) && (Touch::Rect(293, 0, 320, 20))) {
-            std::string path = OSK::GetText("/", "Enter file path");
+            std::string path = OSK::GetText("/", "ファイルパスを入力してください");
             path.append((path.back() != '/')? "/" : "");
             if (FS::DirExists(archive, path)) {
                 cfg.cwd = path;

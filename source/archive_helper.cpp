@@ -56,7 +56,7 @@ namespace ArchiveHelper {
             archive_read_free(arch);
             archive_write_close(ext);
             archive_write_free(ext);
-            Log::Error("archive_read_open_filename(%s) failed: %s\n", path.c_str(), archive_error_string(arch));
+            Log::Error("archive_read_open_filename(%s)が失敗しました: %s\n", path.c_str(), archive_error_string(arch));
             return ret;
         }
 
@@ -79,7 +79,7 @@ namespace ArchiveHelper {
             if (ret == ARCHIVE_EOF)
                 break;
             if (ret < ARCHIVE_OK)
-                Log::Error("archive_read_next_header(%s) failed: %s\n", path.c_str(), archive_error_string(arch));
+                Log::Error("archive_read_next_header(%s)が失敗しました: %s\n", path.c_str(), archive_error_string(arch));
             
             const char *entry_name = archive_entry_pathname(entry);
             std::string dest_path = dest + "/";
@@ -90,13 +90,13 @@ namespace ArchiveHelper {
             s64 entry_size = archive_entry_size(entry);
             ret = archive_write_header(ext, entry);
             if (ret < ARCHIVE_OK)
-                Log::Error("archive_write_header(%s) failed: %s\n", dest_path.c_str(), archive_error_string(arch));
+                Log::Error("archive_write_header(%s)が失敗しました: %s\n", dest_path.c_str(), archive_error_string(arch));
             else if (entry_size > 0) {
                 Handle dest_handle;
                 FSUSER_CreateFile(archive, fsMakePath(PATH_ASCII, dest_path.c_str()), 0, entry_size);
                 
                 if (R_FAILED(ret = FSUSER_OpenFile(&dest_handle, archive, fsMakePath(PATH_ASCII, dest_path.c_str()), FS_OPEN_WRITE, 0))) {
-                    Log::Error("FSUSER_OpenFile(%s) failed: 0x%x\n", dest_path.c_str(), ret);
+                    Log::Error("FSUSER_OpenFile(%s)が失敗しました: 0x%x\n", dest_path.c_str(), ret);
                     archive_read_close(arch);
                     archive_read_free(arch);
                     archive_write_close(ext);
@@ -125,7 +125,7 @@ namespace ArchiveHelper {
                     u32 bytes_read = archive_read_data(arch, buf, buf_size);
                     
                     if (R_FAILED(ret = FSFILE_Write(dest_handle, &bytes_written, offset, buf, bytes_read, FS_WRITE_FLUSH))) {
-                        Log::Error("FSFILE_Write(%s) failed: 0x%x\n", dest_path.c_str(), ret);
+                        Log::Error("FSFILE_Write(%s)が失敗しました: 0x%x\n", dest_path.c_str(), ret);
                         archive_read_close(arch);
                         archive_read_free(arch);
                         archive_write_close(ext);
@@ -142,7 +142,7 @@ namespace ArchiveHelper {
                 FSFILE_Close(dest_handle);
             }
 
-            GUI::ProgressBar("Extracting", filename, index, count);
+            GUI::ProgressBar("抽出", filename, index, count);
             index++;
         }
         
